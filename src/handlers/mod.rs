@@ -4,6 +4,7 @@ pub mod app {
 
 pub mod api {
     pub mod hello;
+    pub mod tasks;
 }
 
 use askama::Template;
