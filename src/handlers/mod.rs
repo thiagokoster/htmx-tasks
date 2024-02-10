@@ -2,6 +2,10 @@ pub mod app {
     pub mod home;
 }
 
+pub mod api {
+    pub mod hello;
+}
+
 use askama::Template;
 use axum::http::StatusCode;
 use axum::response::{Html, IntoResponse};

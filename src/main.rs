@@ -1,6 +1,7 @@
 use anyhow::Context;
 use axum::{routing, Router};
 use dotenvy::dotenv;
+use handlers::api::hello;
 use handlers::app::home;
 use sqlx::{self, SqlitePool};
 use tower_http::services::ServeDir;
@@ -21,12 +22,14 @@ async fn main() -> anyhow::Result<()> {
 
     let url = "127.0.0.1:3000";
     let assets_path = std::env::current_dir().unwrap();
-    let router = Router::new()
-        .route("/", routing::get(home::handler))
-        .nest_service(
-            "/assets",
-            ServeDir::new(format!("{}/assets", assets_path.to_str().unwrap())),
-        );
+
+    let api = Router::new().route("/hello", routing::get(hello::handler));
+    let app = Router::new().route("/", routing::get(home::handler));
+
+    let router = Router::new().nest("/", app).nest("/api", api).nest_service(
+        "/assets",
+        ServeDir::new(format!("{}/assets", assets_path.to_str().unwrap())),
+    );
 
     let addr = tokio::net::TcpListener::bind(url).await.unwrap();
 
