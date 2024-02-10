@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <link href="/assets/main.css" rel="stylesheet" />
+
+  <!-- Any page can set it's own title -->
+  <title>{%block title%}{{ title }}{% endblock %}</title>
+
+  <!-- Possibility to extend head -->
+  {% block head%}{% endblock %}
+</head>
+
+<body>
+  <main>
+    <nav class="flex bg-green-500 text-white font-bold px-2 py-1.5">
+      <div class="grow">
+        Tasks
+      </div>
+    </nav>
+    <div id=content>
+      {% block content %}{% endblock %}
+    </div>
+  </main>
+</body>
+
+</html>
