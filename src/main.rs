@@ -1,16 +1,22 @@
 use anyhow::Context;
 use axum::{routing, Router};
+use dotenvy::dotenv;
+use handlers::app::home;
+use sqlx::{self, SqlitePool};
 use tower_http::services::ServeDir;
 use tracing::info;
 use tracing_subscriber::{prelude::__tracing_subscriber_SubscriberExt, util::SubscriberInitExt};
 
-use handlers::app::home;
-
 mod handlers;
+mod models;
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
+    dotenv().expect(".env file not found");
     init_logging();
+    let db_url = std::env::var("DATABASE_URL")?;
+    let pool = SqlitePool::connect(&db_url).await?;
+
     info!("Initializing router...");
 
     let url = "127.0.0.1:3000";
