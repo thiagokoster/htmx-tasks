@@ -28,6 +28,8 @@ async fn main() -> anyhow::Result<()> {
     let api = Router::new()
         .route("/hello", routing::get(hello::handler))
         .route("/tasks", routing::post(tasks::create_task))
+        .route("/tasks", routing::get(tasks::get_all))
+        .route("/tasks/:task_id/done/:done", routing::put(tasks::set_done))
         .with_state(pool);
     let app = Router::new().route("/", routing::get(home::handler));
 

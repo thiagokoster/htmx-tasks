@@ -1,4 +1,8 @@
 <div class="flex flex-col">
   <p class="text-lg grow">{{title}}</p>
+  {% if done %}
+  <input type="checkbox" checked>
+  {% else %}
   <input type="checkbox">
+  {% endif %}
 </div>

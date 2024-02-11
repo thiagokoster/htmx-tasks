@@ -1,0 +1,6 @@
+<!-- prettier-ignore -->
+{% for task in tasks %}
+{% let title = task.title.clone() %}
+{% let done = task.done.clone() %}
+{% include "task.html" %}
+{% endfor %}
