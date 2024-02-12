@@ -9,11 +9,11 @@ use sqlx::SqlitePool;
 use tracing::info;
 
 #[derive(Template, Clone)]
-#[template(path = "task.html")]
-struct TaskTemplate {
-    id: i64,
-    title: String,
-    done: bool,
+#[template(path = "task-item.html")]
+pub struct TaskTemplate {
+    pub id: i64,
+    pub title: String,
+    pub done: bool,
 }
 
 #[derive(Template)]

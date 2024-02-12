@@ -3,6 +3,7 @@ use axum::{routing, Router};
 use dotenvy::dotenv;
 use handlers::api::hello;
 use handlers::api::tasks;
+use handlers::app;
 use handlers::app::home;
 use sqlx::{self, SqlitePool};
 use tower_http::services::ServeDir;
@@ -29,14 +30,19 @@ async fn main() -> anyhow::Result<()> {
         .route("/hello", routing::get(hello::handler))
         .route("/tasks", routing::post(tasks::create_task))
         .route("/tasks", routing::get(tasks::get_all))
-        .route("/tasks/:task_id/done/:done", routing::put(tasks::set_done))
-        .with_state(pool);
-    let app = Router::new().route("/", routing::get(home::handler));
+        .route("/tasks/:task_id/done/:done", routing::put(tasks::set_done));
+    let app = Router::new()
+        .route("/", routing::get(home::handler))
+        .route("/tasks", routing::get(app::tasks::handler));
 
-    let router = Router::new().nest("/", app).nest("/api", api).nest_service(
-        "/assets",
-        ServeDir::new(format!("{}/assets", assets_path.to_str().unwrap())),
-    );
+    let router = Router::new()
+        .nest("/", app)
+        .nest("/api", api)
+        .with_state(pool)
+        .nest_service(
+            "/assets",
+            ServeDir::new(format!("{}/assets", assets_path.to_str().unwrap())),
+        );
 
     let addr = tokio::net::TcpListener::bind(url).await.unwrap();
 

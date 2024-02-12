@@ -1,5 +1,6 @@
 pub mod app {
     pub mod home;
+    pub mod tasks;
 }
 
 pub mod api {

@@ -3,7 +3,7 @@ use tracing::info;
 
 use crate::models::Task;
 
-pub async fn add(pool: &SqlitePool, task: &Task) -> Result<(Task), sqlx::Error> {
+pub async fn add(pool: &SqlitePool, task: &Task) -> Result<Task, sqlx::Error> {
     info!("Adding task {}", task.title);
     let result = sqlx::query_as!(
         Task,
@@ -18,7 +18,7 @@ pub async fn add(pool: &SqlitePool, task: &Task) -> Result<(Task), sqlx::Error> 
     Ok(result)
 }
 
-pub async fn all(pool: &SqlitePool) -> Result<(Vec<Task>), sqlx::Error> {
+pub async fn all(pool: &SqlitePool) -> Result<Vec<Task>, sqlx::Error> {
     let result = sqlx::query_as!(
         Task,
         r#"
@@ -31,7 +31,7 @@ pub async fn all(pool: &SqlitePool) -> Result<(Vec<Task>), sqlx::Error> {
     Ok(result)
 }
 
-pub async fn set_done(pool: &SqlitePool, id: i64, done: bool) -> Result<(Task), sqlx::Error> {
+pub async fn set_done(pool: &SqlitePool, id: i64, done: bool) -> Result<Task, sqlx::Error> {
     let result = sqlx::query_as!(
         Task,
         r#"
