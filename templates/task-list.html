@@ -1,9 +1,11 @@
 <!-- prettier-ignore -->
-<div id="task-list" class="flex flex-col divide-y mx-auto gap-2 p-2 bg-slate-100 w-1/2">
+<ul id="task-list" class="flex flex-col rounded divide-y-2 mx-auto bg-slate-100 w-1/2">
   {% for task in tasks %}
   {% let id = task.id %}
   {% let title = task.title.clone() %}
   {% let done = task.done.clone() %}
-  {% include "task-item.html" %}
+  <li id="item-{{id}}">
+    {% include "task-item.html" %}
+  </li>
   {% endfor %}
-</div>
+</ul>
