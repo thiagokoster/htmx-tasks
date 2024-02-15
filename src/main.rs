@@ -30,6 +30,7 @@ async fn main() -> anyhow::Result<()> {
         .route("/hello", routing::get(hello::handler))
         .route("/tasks", routing::post(tasks::create_task))
         .route("/tasks", routing::get(tasks::get_all))
+        .route("/tasks/:id", routing::delete(tasks::delete))
         .route("/tasks/:task_id/done/:done", routing::put(tasks::set_done));
     let app = Router::new()
         .route("/", routing::get(home::handler))

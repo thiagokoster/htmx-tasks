@@ -4,8 +4,6 @@
   {% let id = task.id %}
   {% let title = task.title.clone() %}
   {% let done = task.done.clone() %}
-  <li id="item-{{id}}">
-    {% include "task-item.html" %}
-  </li>
+  {% include "task-item.html" %}
   {% endfor %}
 </ul>

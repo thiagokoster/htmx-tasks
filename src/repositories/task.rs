@@ -47,3 +47,16 @@ pub async fn set_done(pool: &SqlitePool, id: i64, done: bool) -> Result<Task, sq
     .await?;
     Ok(result)
 }
+
+pub async fn delete(pool: &SqlitePool, id: i64) -> Result<(), sqlx::Error> {
+    sqlx::query!(
+        r#"
+    DELETE FROM task
+    WHERE id = $1
+    "#,
+        id
+    )
+    .execute(pool)
+    .await?;
+    Ok(())
+}

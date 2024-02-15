@@ -1,13 +1,20 @@
-<div class="flex py-1.5 px-2">
-  {% if !done %}
-  <p class="text-lg grow">{{title}}</p>
-  <button hx-put="/api/tasks/{{id}}/done/true"
-    class="rounded border-4 border-slate-200 w-10 h-10 text-white hover:border-slate-300" hx-target="#item-{{id}}">
-  </button>
-  {% else %}
-  <p class="text-lg grow line-through">{{title}}</p>
-  <button hx-put="/api/tasks/{{id}}/done/false"
-    class="rounded bg-green-500 w-10 h-10 text-3xl text-white hover:bg-green-600 active:bg-green-700"
-    hx-target="#item-{{id}}">✓</button>
-  {% endif %}
-</div>
+<li id="item-{{id}}">
+  <div class="flex gap-2 py-1.5 px-2">
+    {% if !done %}
+    <p class="text-lg grow">{{title}}</p>
+    <button hx-put="/api/tasks/{{id}}/done/true"
+      class="rounded border-4 border-slate-200 w-10 h-10 text-white hover:border-slate-300" hx-target="#item-{{id}}">
+    </button>
+    {% else %}
+    <p class="text-lg grow line-through">{{title}}</p>
+    <button hx-put="/api/tasks/{{id}}/done/false"
+      class="rounded bg-green-500 w-10 h-10 text-3xl text-white hover:bg-green-600 active:bg-green-700"
+      hx-target="#item-{{id}}">✓</button>
+    {% endif %}
+    <button hx-delete="/api/tasks/{{id}}" hx-confirm="Do you want to delete the task '{{title}}'?"
+      hx-target="#item-{{id}}"
+      class="rounded bg-red-500 w-10 h-10 text-3xl text-white hoover:bg-red-600 active:bg-red-700 ">
+      X
+    </button>
+  </div>
+</li>

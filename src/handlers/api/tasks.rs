@@ -85,3 +85,7 @@ pub async fn set_done(
 
     HtmlTemplate(template)
 }
+
+pub async fn delete(State(pool): State<SqlitePool>, Path(id): Path<i64>) -> impl IntoResponse {
+    task::delete(&pool, id).await.unwrap();
+}
